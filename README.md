@@ -3,7 +3,7 @@
 INTRODUCTION
 ------------
 
-An Automate webportal which generates the notices and sends to respective client, whre he/she will be provided the charge sheet and is required to pay the fine online.
+VNIT Student Portal provides insight of the Jobs/Internships Interview experiences for On-Off Campus recruitements and the life at the campus of Vnit.
 
 
 SETUP
@@ -105,7 +105,7 @@ myproject/
 		templates/
 		manage.py
 		requirements.txt
-  portalenv/
+  	portalenv/
 ```
 
 <h3 id="mysql">MySQL</h3>
@@ -137,7 +137,7 @@ sudo apt-get install python-pip python-dev mysql-server libmysqlclient-dev
 <p>You will be prompted for the administrative password you selected during installation.  Afterwards, you will be given a prompt.</p>
 
 <p>First, we will create a database for our Django project.  Each project should have its own isolated database for security reasons.  We will call our database <code><span class="highlight">myproject</span></code> in this guide, but it's always better to select something more descriptive.  We'll set the default type for the database to UTF-8, which is what Django expects:</p>
-The credentials you use while creating database should match with the DATABASES settings in the file ```production.py```. Which kinda looks like this.
+The credentials you use while creating database should match with the DATABASES settings in the file `production.py`, Which kinda looks like this.
 <pre class="code-pre "><code langs="">. . .
 
 DATABASES = {
