@@ -107,12 +107,10 @@ myproject/
 		requirements.txt
   portalenv/
 ```
-### Database
-It's time to install mySQL database on your machine. Refer this great [article ]
 
 <h3 id="mysql">MySQL</h3>
 
-<p>If you want to use MySQL, the following <code>apt</code> commands will get you the packages you need:</p>
+<p>Now we have to setup the database for pur project which is MySQL, the following <code>apt</code> commands will get you the packages you need:</p>
 <pre class="code-pre "><code langs="">sudo apt-get update
 sudo apt-get install python-pip python-dev mysql-server libmysqlclient-dev
 </code></pre>
@@ -131,7 +129,7 @@ sudo apt-get install python-pip python-dev mysql-server libmysqlclient-dev
 
 <div name="create-a-database-and-database-user" data-unique="create-a-database-and-database-user"></div><h2 id="create-a-database-and-database-user">Create a Database and Database User</h2>
 
-<p>The remainder of this guide can be followed as-is regardless of whether you installed MySQL or MariaDB.</p>
+<p>The remainder of this guide can be followed as-is regardless of whether you installed MySQL.</p>
 
 <p>We can start by logging into an interactive session with our database software by typing the following (the command is the same regardless of which database software you are using):</p>
 <pre class="code-pre "><code langs="">mysql -u root -p
@@ -139,59 +137,7 @@ sudo apt-get install python-pip python-dev mysql-server libmysqlclient-dev
 <p>You will be prompted for the administrative password you selected during installation.  Afterwards, you will be given a prompt.</p>
 
 <p>First, we will create a database for our Django project.  Each project should have its own isolated database for security reasons.  We will call our database <code><span class="highlight">myproject</span></code> in this guide, but it's always better to select something more descriptive.  We'll set the default type for the database to UTF-8, which is what Django expects:</p>
-<pre class="code-pre "><code langs="">CREATE DATABASE <span class="highlight">myproject</span> CHARACTER SET UTF8;
-</code></pre>
-<p>Remember to end all commands at an SQL prompt with a semicolon.</p>
-
-<p>Next, we will create a database user which we will use to connect to and interact with the database.  Set the password to something strong and secure:</p>
-<pre class="code-pre "><code langs="">CREATE USER <span class="highlight">myprojectuser</span>@localhost IDENTIFIED BY '<span class="highlight">password</span>';
-</code></pre>
-<p>Now, all we need to do is give our database user access rights to the database we created:</p>
-<pre class="code-pre "><code langs="">GRANT ALL PRIVILEGES ON <span class="highlight">myproject</span>.* TO <span class="highlight">myprojectuser</span>@localhost;
-</code></pre>
-<p>Flush the changes so that they will be available during the current session:</p>
-<pre class="code-pre "><code langs="">FLUSH PRIVILEGES;
-</code></pre>
-<p>Exit the SQL prompt to get back to your regular shell session:</p>
-<pre class="code-pre "><code langs="">exit
-</code></pre>
-<div name="install-django-within-a-virtual-environment" data-unique="install-django-within-a-virtual-environment"></div><h2 id="install-django-within-a-virtual-environment">Install Django within a Virtual Environment</h2>
-
-<p>Now that our database is set up, we can install Django.  For better flexibility, we will install Django and all of its dependencies within a Python virtual environment.</p>
-
-<p>You can get the <code>virtualenv</code> package that allows you to create these environments by typing:</p>
-<pre class="code-pre "><code langs="">sudo pip install virtualenv
-</code></pre>
-<p>Make a directory to hold your Django project.  Move into the directory afterwards:</p>
-<pre class="code-pre "><code langs="">mkdir ~/<span class="highlight">myproject</span>
-cd ~/<span class="highlight">myproject</span>
-</code></pre>
-<p>We can create a virtual environment to store our Django project's Python requirements by typing:</p>
-<pre class="code-pre "><code langs="">virtualenv <span class="highlight">myprojectenv</span>
-</code></pre>
-<p>This will install a local copy of Python and <code>pip</code> into a directory called <code><span class="highlight">myprojectenv</span></code> within your project directory.</p>
-
-<p>Before we install applications within the virtual environment, we need to activate it. You can do so by typing:</p>
-<pre class="code-pre "><code langs="">source <span class="highlight">myprojectenv</span>/bin/activate
-</code></pre>
-<p>Your prompt will change to indicate that you are now operating within the virtual environment. It will look something like this <code>(<span class="highlight">myprojectenv</span>)<span class="highlight">user</span>@<span class="highlight">host</span>:~/<span class="highlight">myproject</span>$</code>.</p>
-
-<p>Once your virtual environment is active, you can install Django with <code>pip</code>.  We will also install the <code>mysqlclient</code> package that will allow us to use the database we configured:</p>
-<pre class="code-pre "><code langs="">pip install django mysqlclient
-</code></pre>
-<p>We can now start a Django project within our <code>myproject</code> directory.  This will create a child directory of the same name to hold the code itself, and will create a management script within the current directory.  Make sure to add the dot at the end of the command so that this is set up correctly:</p>
-<pre class="code-pre "><code langs="">django-admin.py startproject <span class="highlight">myproject</span> .
-</code></pre>
-<div name="configure-the-django-database-settings" data-unique="configure-the-django-database-settings"></div><h2 id="configure-the-django-database-settings">Configure the Django Database Settings</h2>
-
-<p>Now that we have a project, we need to configure it to use the database we created.</p>
-
-<p>Open the main Django project settings file located within the child project directory:</p>
-<pre class="code-pre "><code langs="">nano ~/<span class="highlight">myproject</span>/<span class="highlight">myproject</span>/settings.py
-
-<p>This is currently configured to use SQLite as a database.  We need to change this so that our MySQL database is used instead.</p>
-
-<p>First, change the engine so that it points to the <code>mysql</code> backend instead of the <code>sqlite3</code> backend.  For the <code>NAME</code>, use the name of your database (<code><span class="highlight">myproject</span></code> in our example).  We also need to add login credentials.  We need the username, password, and host to connect to.  We'll add and leave blank the port option so that the default is selected:</p>
+The credentials you use while creating database should match with the DATABASES settings in the file ```production.py```. Which kinda looks like this.
 <pre class="code-pre "><code langs="">. . .
 
 DATABASES = {
@@ -208,12 +154,28 @@ DATABASES = {
 . . .
 </code></pre>
 
+<pre class="code-pre "><code langs="">CREATE DATABASE <span class="highlight">myproject</span> CHARACTER SET UTF8;
+</code></pre>
+<p>Remember to end all commands at an SQL prompt with a semicolon.</p>
+
+<p>Next, we will create a database user which we will use to connect to and interact with the database.  Set the password to something strong and secure:</p>
+<pre class="code-pre "><code langs="">CREATE USER <span class="highlight">myprojectuser</span>@localhost IDENTIFIED BY '<span class="highlight">password</span>';
+</code></pre>
+<p>Now, all we need to do is give our database user access rights to the database we created:</p>
+<pre class="code-pre "><code langs="">GRANT ALL PRIVILEGES ON <span class="highlight">myproject</span>.* TO <span class="highlight">myprojectuser</span>@localhost;
+</code></pre>
+<p>Flush the changes so that they will be available during the current session:</p>
+<pre class="code-pre "><code langs="">FLUSH PRIVILEGES;
+</code></pre>
+<p>Exit the SQL prompt to get back to your regular shell session:</p>
+<pre class="code-pre "><code langs="">exit
+</code></pre>
 <div name="migrate-the-database-and-test-your-project" data-unique="migrate-the-database-and-test-your-project"></div><h2 id="migrate-the-database-and-test-your-project">Migrate the Database and Test your Project</h2>
 
 <p>Now that the Django settings are configured, we can migrate our data structures to our database and test out the server.</p>
 
 <p>We can begin by creating and applying migrations to our database.  Since we don't have any actual data yet, this will simply set up the initial database structure:</p>
-<pre class="code-pre "><code langs="">cd ~/<span class="highlight">myproject</span>
+<pre class="code-pre "><code langs="">cd ~/<span class="highlight">stupo-task</span>
 python manage.py makemigrations
 python manage.py migrate
 </code></pre>
@@ -227,21 +189,9 @@ python manage.py migrate
 <p>In your web browser, visit your server's domain name or IP address followed by <code>:8000</code> to reach default Django root page:</p>
 <pre class="code-pre "><code langs="">http://<span class="highlight">127.0.0.1</span>:8000
 </code></pre>
-<p>You should see the default index page:</p>
 
-<p><img src="https://assets.digitalocean.com/articles/django_mysql_1404/django_index.png" alt="Django index"></p>
-
-<p>Append /admin to the end of the URL and you should be able to access the login screen to the admin interface:</p>
-
-<p><img src="https://assets.digitalocean.com/articles/django_mysql_1404/admin_login.png" alt="Django admin login"></p>
-
-<p>Enter the username and password you just created using the <code>createsuperuser</code> command.  You will then be taken to the admin interface:</p>
-
-<p><img src="https://assets.digitalocean.com/articles/django_mysql_1404/admin_interface.png" alt="Django admin interface"></p>
 
 <p>When you're done investigating, you can stop the development server by hitting CTRL-C in your terminal window.</p>
-
-<p>By accessing the admin interface, we have confirmed that our database has stored our user account information and that it can be appropriately accessed.</p>
 
 *Don't forgot to activate virtual environment in every new terminal ( WE USE MANY THESE ;) ).*
 
@@ -256,5 +206,5 @@ python manage.py migrate
 
 MAINTAINED BY
 -------------
-Team StudenPortal. Check here
+Team StudenPortal.
 
