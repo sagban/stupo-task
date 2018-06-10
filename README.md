@@ -186,7 +186,7 @@ python manage.py migrate
 
 <p>Once you have an admin account set up, you can test that your database is performing correctly by starting up the Django development server:</p>
 <pre class="code-pre "><code langs="">python manage.py runserver</code></pre>
-<p>In your web browser, visit your server's domain name or IP address followed by <code>:8000</code> to reach default Django root page:</p>
+<p>In your web browser, visit 127.0.0.1 <code>:8000</code></p>
 <pre class="code-pre "><code langs="">http://<span class="highlight">127.0.0.1</span>:8000
 </code></pre>
 
@@ -206,5 +206,6 @@ python manage.py migrate
 
 MAINTAINED BY
 -------------
-Team StudenPortal.
+Team StudenPortal.(http://studentportal.vnit.ac.in/home/aboutus/)
 
+Happy Coding!
